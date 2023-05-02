@@ -17,7 +17,6 @@ public class Authentication {
 
     /** 社員番号 */
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String code;
 
     /** パスワード　*/
