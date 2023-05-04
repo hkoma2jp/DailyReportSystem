@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>従業員一覧｜日報管理システム</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link rel="stylesheet" th:href="@{../assets/common/css/style.css}">
+    <link rel="stylesheet" th:href="@{../assets/employee/list/css/style.css}">
+</head>
+<body>
+    <div class="wrap">
+        <header class="header">
+            <div class="inner">
+                <h1>日報管理システム</h1>
+            </div>
+        </header>
+
+        <main class="content">
+            <div class="inner">
+                <h2>従業員一覧</h2>
+                <table>
+                    <tr>
+                        <th>ID</th>
+                        <th>名前</th>
+                        <th>更新日時</th>
+                    </tr>
+                    <tr th:each="employee : ${employeeList}">
+                        <td th:text="${employee.id}"></td>
+                        <td th:text="${employee.name}"></td>
+                        <td th:text="${employee.updated_at}"></td>
+                    </tr>
+                </table>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="inner">
+                <p>日報管理システム</p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
