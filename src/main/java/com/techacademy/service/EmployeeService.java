@@ -19,4 +19,9 @@ public class EmployeeService {
     public List<Employee> getEmployeeList() {
         return employeeRepository.findAll();
     }
+
+    /** Userを1件検索して返す */
+    public Employee getEmployee(Integer id) {
+        return employeeRepository.findById(id).get();
+    }
 }
