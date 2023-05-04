@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="'従業員' + #{content.list} + ' | ' + #{content.system}"></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link rel="stylesheet" th:href="@{../assets/common/css/style.css}">
+    <link rel="stylesheet" th:href="@{../assets/employee/list/css/style.css}">
+</head>
+<body>
+    <div class="wrap">
+        <header class="header">
+            <div class="inner">
+                <h1 th:text="#{content.system}"></h1>
+            </div>
+        </header>
+
+        <main class="content">
+            <div class="inner">
+                <h2 th:text="'従業員' + #{content.list}"></h2>
+                <table>
+                    <tr>
+                        <th>ID</th>
+                        <th>名前</th>
+                        <th>更新日時</th>
+                        <th>操作</th>
+                    </tr>
+                    <tr th:each="employee : ${employeeList}">
+                        <td th:text="${employee.id}"></td>
+                        <td th:text="${employee.name}"></td>
+                        <td th:text="${employee.updated_at}"></td>
+                        <td></td>
+                    </tr>
+                </table>
+                <div class="vol">
+                    <span th:text="'（全' + ${employeeList.size() + '件）'}"></span>
+                </div>
+                <div class="menu">
+                    <ul>
+                        <li><a href="/employee/new">新規従業員の登録</a></li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="inner">
+                <p th:text="#{content.system}"></p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
