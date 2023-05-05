@@ -31,7 +31,9 @@
                         <td th:text="${employee.id}"></td>
                         <td th:text="${employee.name}"></td>
                         <td th:text="${employee.updated_at}"></td>
-                        <td></td>
+                        <td>
+                            <a th:href="@{/employee/{aid}(aid=${employee.id})}" th:text="#{action.viewdetail}"></a>
+                        </td>
                     </tr>
                 </table>
                 <div class="vol">
