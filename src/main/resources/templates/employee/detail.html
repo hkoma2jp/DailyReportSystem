@@ -31,7 +31,7 @@
                     </tr>
                     <tr>
                         <th>権限</th>
-                        <td></td>
+                        <td th:text="${employee.authentication.role}"></td>
                     </tr>
                     <tr>
                         <th>登録日時</th>
@@ -44,7 +44,7 @@
                 </table>
                 <div class="menu">
                     <ul>
-                        <li><a th:href="@{/employee/edit/{aid}(aid=${id})}">新規従業員の登録</a></li>
+                        <li><a th:href="@{/employee/edit/{aid}(aid=${id})}">新規従業員の編集</a></li>
                         <li><a href="/employee/list">一覧に戻る</a></li>
                     </ul>
                 </div>
