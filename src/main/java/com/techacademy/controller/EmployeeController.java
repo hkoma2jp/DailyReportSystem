@@ -39,22 +39,51 @@ public class EmployeeController {
         return "employee/detail";
     }
 
-    /** */
+    /** 新規登録画面を表示 */
     @GetMapping("/new")
     public String getRegister(@ModelAttribute Employee employee) {
         return "employee/register";
     }
 
+    /** 新規登録処理 */
     @PostMapping("/register")
     public String postRegister(@Validated Employee employee, BindingResult res ) {
         if(res.hasErrors()) {
             // エラーあり
             return getRegister(employee);
         }
-
+        // 削除フラグは0
         employee.setDelete_flag(0);
         // 登録日時＝更新日時
         employee.setCreated_at(LocalDateTime.now());
+        employee.setUpdated_at(LocalDateTime.now());
+
+        service.saveEmployee(employee);
+        return "redirect:/employee/list";
+    }
+
+    /** 編集画面を表示 */
+    @GetMapping("/edit/{id}")
+    public String getEdit(@PathVariable("id") Integer id, Employee employee, Model model) {
+        if (id != null ) {
+            employee = service.getEmployee(id);
+        }
+        model.addAttribute("employee", employee);
+        return "employee/edit";
+    }
+
+    /** 更新処理 */
+    @PostMapping("/update/{id}")
+    public String postEmployee(@PathVariable("id") Integer id, Employee employee, BindingResult res, Model model ) {
+        if (res.hasErrors()) {
+            return getEdit(id, employee, model);
+        }
+        // 削除フラグは0
+        employee.setDelete_flag(0);
+        // 登録日時はそのまま
+        LocalDateTime createdAt = service.getEmployee(id).getCreated_at();
+        employee.setCreated_at(createdAt);
+        // 更新日時は更新
         employee.setUpdated_at(LocalDateTime.now());
 
         service.saveEmployee(employee);
