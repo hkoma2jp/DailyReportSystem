@@ -27,7 +27,7 @@
                                 <label for="id">社員番号</label>
                             </th>
                             <td>
-                                <p th:value="${employee.authentication.code}" th:text="${employee.authentication.code}"></p>
+                                <p th:text="*{authentication.code}"></p>
                             </td>
                         </tr>
                         <tr>
@@ -44,7 +44,7 @@
                                 <label for="password">パスワード</label>
                             </th>
                             <td>
-                                <input type="text" th:value="${employee.authentication.password}">
+                                <input type="text" name="authentication.password">
                             </td>
                         </tr>
                         <tr>
@@ -52,7 +52,7 @@
                                 <label for="name">権限</label>
                             </th>
                             <td>
-                                <input type="text" th:value="${employee.authentication.role}">
+                                <input type="text" th:field="*{authentication.role}">
                             </td>
                         </tr>
                     </table>

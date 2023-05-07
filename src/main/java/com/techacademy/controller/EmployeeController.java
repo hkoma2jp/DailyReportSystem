@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.techacademy.entity.Authentication;
 import com.techacademy.entity.Employee;
 import com.techacademy.service.EmployeeService;
 
@@ -52,12 +53,16 @@ public class EmployeeController {
             // エラーあり
             return getRegister(employee);
         }
-        // 削除フラグは0
+        // Formから取得したemployeeに対して、削除フラグと日時を入れて、DBに書込
+        Authentication auth = employee.getAuthentication();
+        // 1. Form の authentication に employee を登録 (employeeとauthenticationは OneToOne)
+        auth.setEmployee(employee);
+        // 2. 削除フラグは0
         employee.setDelete_flag(0);
-        // 登録日時＝更新日時
+        // 3. 登録日時＝更新日時
         employee.setCreated_at(LocalDateTime.now());
         employee.setUpdated_at(LocalDateTime.now());
-
+        // 4. DBへ
         service.saveEmployee(employee);
         return "redirect:/employee/list";
     }
@@ -74,19 +79,29 @@ public class EmployeeController {
 
     /** 更新処理 */
     @PostMapping("/update/{id}")
-    public String postEmployee(@PathVariable("id") Integer id, Employee employee, BindingResult res, Model model ) {
+    public String postEmployee(@PathVariable("id") Integer id, @Validated Employee employee, BindingResult res, Model model ) {
         if (res.hasErrors()) {
             return getEdit(id, employee, model);
         }
-        // 削除フラグは0
-        employee.setDelete_flag(0);
-        // 登録日時はそのまま
-        LocalDateTime createdAt = service.getEmployee(id).getCreated_at();
-        employee.setCreated_at(createdAt);
-        // 更新日時は更新
-        employee.setUpdated_at(LocalDateTime.now());
+        // DBから取得したemployeeに対してformでの変更を加え、DBに書込
+        Employee emplDb = service.getEmployee(id);
+        // 1. name の更新・・・employee
+        emplDb.setName(employee.getName());
+        // 2. 更新日時は更新
+        emplDb.setUpdated_at(LocalDateTime.now());
 
-        service.saveEmployee(employee);
+        Authentication authDb = emplDb.getAuthentication();
+        Authentication authForm = employee.getAuthentication();
+        // 3. passwordの更新（変更があった時だけ）・・・authentication
+        if (!authForm.getPassword().equals("")) {
+            // パスワードが空白の時
+            authDb.setPassword(authForm.getPassword());
+        }
+        // 4. roleの更新・・・authentication
+        authDb.setRole(authForm.getRole());
+        // 5. DBへ
+        service.saveEmployee(emplDb);
         return "redirect:/employee/list";
     }
+
 }
