@@ -1,6 +1,8 @@
 package com.techacademy.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,6 +17,11 @@ import lombok.Data;
 @Table(name = "authentication")
 public class Authentication {
 
+    /** 権限用の列挙型 */
+    public static enum Role {
+        管理者, 一般
+    }
+
     /** 社員番号 */
     @Id
     private String code;
@@ -23,7 +30,8 @@ public class Authentication {
     private String password;
 
     /** 権限 */
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     /** 従業員テーブルのID */
     @OneToOne
