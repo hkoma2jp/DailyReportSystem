@@ -22,15 +22,13 @@
                 <h2 th:text="'従業員' + #{content.list}"></h2>
                 <table>
                     <tr>
-                        <th>ID</th>
-                        <th>名前</th>
-                        <th>更新日時</th>
+                        <th>社員番号</th>
+                        <th>氏名</th>
                         <th>操作</th>
                     </tr>
                     <tr th:each="employee : ${employeeList}">
-                        <td th:text="${employee.id}"></td>
+                        <td th:text="${employee.authentication.code}"></td>
                         <td th:text="${employee.name}"></td>
-                        <td th:text="${employee.updated_at}"></td>
                         <td>
                             <a th:href="@{/employee/{aid}(aid=${employee.id})}" th:text="#{action.viewdetail}"></a>
                         </td>
