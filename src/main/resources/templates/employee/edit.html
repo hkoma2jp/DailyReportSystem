@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="'従業員ID' + ${id} + 'の従業員情報' + #{content.edit} + ' | ' + #{content.system}"></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link rel="stylesheet" th:href="@{/assets/common/css/style.css}">
+    <link rel="stylesheet" th:href="@{/assets/employee/edit/css/style.css}">
+</head>
+<body>
+    <div class="wrap">
+        <header class="header">
+            <div class="inner">
+                <h1 th:text="#{content.system}"></h1>
+            </div>
+        </header>
+
+        <main class="content">
+            <div class="inner">
+                <h2 th:text="'従業員ID' + ${id} + 'の従業員情報 ' + #{content.edit}"></h2>
+                <form method="post" th:action="@{/employee/update/{id}/(id=${employee.id})}" th:object="${employee}">
+                    <table>
+                        <tr>
+                            <th>
+                                <label for="id">社員番号</label>
+                            </th>
+                            <td>
+                                <p th:text="*{authentication.code}" th:field="*{authentication.code}"></p>
+                                <!--  登録済みなので、hiddenで更新処理に渡す -->
+                                <input type="hidden" th:field="*{authentication.code}">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                <label for="name">名前</label>
+                            </th>
+                            <td>
+                                <input type="text" th:field="*{name}" th:errorclass="err">
+                                <span th:errors="*{name}" class="err"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                <label for="password">パスワード</label>
+                            </th>
+                            <td>
+                                <!--  入力された値があれば、そのまま更新処理に渡す -->
+                                <input type="text" name="newpassword">
+                                <!--  変更なければ、hiddenで取得したパスワードを更新処理に渡す -->
+                                <input type="hidden" th:field="*{authentication.password}">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                <label for="name">権限</label>
+                            </th>
+                            <td>
+                                <select th:field="*{authentication.role}" th:errorclass="err">
+                                    <option value="" th:text="選択してください">
+                                    <option th:each="item:${T(com.techacademy.entity.Authentication.Role).values()}" th:value="${item}" th:text="${item}">
+                                </select>
+                                <span th:errors="*{authentication.role}" class="err"></span>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="controller">
+                        <input type="submit" value="登録">
+                    </div>
+                </form>
+                <div class="menu">
+                    <ul>
+                        <li>
+                            <a th:href="@{/employee/delete/{aid}(aid=${id})}" th:text="#{content.thisemployee} + 'を' + #{action.delete}"></a>
+                        </li>
+                        <li><a href="/employee/list" th:text="#{content.list} + 'に' + #{action.back}"></a></li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="inner">
+                <p th:text="#{content.system}"></p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
