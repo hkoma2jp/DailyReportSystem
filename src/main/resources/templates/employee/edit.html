@@ -27,7 +27,9 @@
                                 <label for="id">社員番号</label>
                             </th>
                             <td>
-                                <p th:text="*{authentication.code}"></p>
+                                <p th:text="*{authentication.code}" th:field="*{authentication.code}"></p>
+                                <!--  登録済みなので、hiddenで更新処理に渡す -->
+                                <input type="hidden" th:field="*{authentication.code}">
                             </td>
                         </tr>
                         <tr>
@@ -44,7 +46,10 @@
                                 <label for="password">パスワード</label>
                             </th>
                             <td>
-                                <input type="text" name="authentication.password">
+                                <!--  入力された値があれば、そのまま更新処理に渡す -->
+                                <input type="text" name="newpassword">
+                                <!--  変更なければ、hiddenで取得したパスワードを更新処理に渡す -->
+                                <input type="hidden" th:field="*{authentication.password}">
                             </td>
                         </tr>
                         <tr>
@@ -52,7 +57,11 @@
                                 <label for="name">権限</label>
                             </th>
                             <td>
-                                <input type="text" th:field="*{authentication.role}">
+                                <select th:field="*{authentication.role}" th:errorclass="err">
+                                    <option value="" th:text="選択してください">
+                                    <option th:each="item:${T(com.techacademy.entity.Authentication.Role).values()}" th:value="${item}" th:text="${item}">
+                                </select>
+                                <span th:errors="*{authentication.role}" class="err"></span>
                             </td>
                         </tr>
                     </table>
@@ -63,9 +72,9 @@
                 <div class="menu">
                     <ul>
                         <li>
-                            <a href="/emploee/delete" th:text="#{content.thisemployee} + '削除する'"></a>
+                            <a th:href="@{/employee/delete/{aid}(aid=${id})}" th:text="#{content.thisemployee} + 'を' + #{action.delete}"></a>
                         </li>
-                        <li><a href="/employee/list">一覧に戻る</a></li>
+                        <li><a href="/employee/list" th:text="#{content.list} + 'に' + #{action.back}"></a></li>
                     </ul>
                 </div>
             </div>

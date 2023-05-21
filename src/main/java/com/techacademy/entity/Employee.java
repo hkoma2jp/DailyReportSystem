@@ -1,8 +1,6 @@
 package com.techacademy.entity;
 
-import java.sql.Date;
 import java.time.LocalDateTime;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,11 +9,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.annotations.Where;
 import org.hibernate.validator.constraints.Length;
-
 import lombok.Data;
 
 @Data
@@ -54,6 +52,7 @@ public class Employee {
     }
 
     @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL)
+    @Valid
     private Authentication authentication;
 }
 
