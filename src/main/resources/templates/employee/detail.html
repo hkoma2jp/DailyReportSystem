@@ -35,17 +35,18 @@
                     </tr>
                     <tr>
                         <th>登録日時</th>
-                        <td th:text="${employee.created_at}"></td>
+                        <td th:text="${#temporals.format(employee.created_at, 'yyyy-MM-dd HH:mm:ss')}"></td>
                     </tr>
                     <tr>
                         <th>更新日時</th>
-                        <td th:text="${employee.updated_at}"></td>
+                        <td th:text="${#temporals.format(employee.updated_at, 'yyyy-MM-dd HH:mm:ss')}"></td>
                     </tr>
                 </table>
                 <div class="menu">
                     <ul>
-                        <li><a th:href="@{/employee/edit/{aid}(aid=${id})}">新規従業員の編集</a></li>
-                        <li><a href="/employee/list">一覧に戻る</a></li>
+                        <li><a th:href="@{/employee/edit/{aid}(aid=${id})}" th:text="#{content.thisemployee} + 'を' + #{action.edit}"></a></li>
+                        <li><a th:href="@{/employee/delete/{aid}(aid=${id})}" th:text="#{content.thisemployee} + 'を' + #{action.delete}"></a></li>
+                        <li><a href="/employee/list" th:text="#{content.list} + 'に' + #{action.back}"></a></li>
                     </ul>
                 </div>
             </div>

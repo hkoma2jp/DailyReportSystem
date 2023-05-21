@@ -3,12 +3,12 @@ package com.techacademy.entity;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 
@@ -24,13 +24,16 @@ public class Authentication {
 
     /** 社員番号 */
     @Id
+    @NotEmpty
     private String code;
 
     /** パスワード　*/
+    @NotEmpty
     private String password;
 
     /** 権限 */
     @Enumerated(EnumType.STRING)
+    @NotNull
     private Role role;
 
     /** 従業員テーブルのID */

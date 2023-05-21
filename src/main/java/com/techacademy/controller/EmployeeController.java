@@ -1,8 +1,6 @@
 package com.techacademy.controller;
 
 import java.time.LocalDateTime;
-import java.util.List;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.techacademy.entity.Authentication;
 import com.techacademy.entity.Employee;
@@ -79,7 +78,7 @@ public class EmployeeController {
 
     /** 更新処理 */
     @PostMapping("/update/{id}")
-    public String postEmployee(@PathVariable("id") Integer id, @Validated Employee employee, BindingResult res, Model model ) {
+    public String postEmployee(@PathVariable("id") Integer id, @Validated Employee employee, BindingResult res, Model model, @RequestParam String newpassword ) {
         if (res.hasErrors()) {
             return getEdit(id, employee, model);
         }
@@ -92,14 +91,26 @@ public class EmployeeController {
 
         Authentication authDb = emplDb.getAuthentication();
         Authentication authForm = employee.getAuthentication();
+
         // 3. passwordの更新（変更があった時だけ）・・・authentication
+        //  ・リクエストパラメータのnewpasswordをemployee.authentication.passwordにセットする
+        authForm.setPassword(newpassword);
         if (!authForm.getPassword().equals("")) {
-            // パスワードが空白の時
+            // ・passwordが空白ではなかった=パスワードの編集があった時は、passwordをセットする
             authDb.setPassword(authForm.getPassword());
         }
         // 4. roleの更新・・・authentication
         authDb.setRole(authForm.getRole());
-        // 5. DBへ
+        // 5. DBへ登録する
+        service.saveEmployee(emplDb);
+        return "redirect:/employee/list";
+    }
+
+    /** 削除処理 */
+    @GetMapping("/delete/{id}")
+    public String postDelete(@PathVariable("id") Integer id) {
+        Employee emplDb = service.getEmployee(id);
+        emplDb.setDelete_flag(1);
         service.saveEmployee(emplDb);
         return "redirect:/employee/list";
     }
