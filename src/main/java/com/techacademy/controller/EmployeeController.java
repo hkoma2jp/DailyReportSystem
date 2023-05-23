@@ -80,7 +80,7 @@ public class EmployeeController {
     @PostMapping("/update/{id}")
     public String postEmployee(@PathVariable("id") Integer id, @Validated Employee employee, BindingResult res, Model model, @RequestParam String newpassword ) {
         if (res.hasErrors()) {
-            return getEdit(id, employee, model);
+            return "employee/edit";
         }
         // DBから取得したemployeeに対してformでの変更を加え、DBに書込
         Employee emplDb = service.getEmployee(id);
