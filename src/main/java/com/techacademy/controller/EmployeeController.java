@@ -1,6 +1,9 @@
 package com.techacademy.controller;
 
 import java.time.LocalDateTime;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,6 +27,9 @@ public class EmployeeController {
     public EmployeeController(EmployeeService service) {
         this.service = service;
     }
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     /** 一覧画面を表示 */
     @GetMapping("/list")
@@ -61,7 +67,11 @@ public class EmployeeController {
         // 3. 登録日時＝更新日時
         employee.setCreated_at(LocalDateTime.now());
         employee.setUpdated_at(LocalDateTime.now());
-        // 4. DBへ
+        // 4. パスワードを暗号化
+        String rawPassword = auth.getPassword();
+        String encodedPassword = passwordEncoder.encode(rawPassword);
+        auth.setPassword(encodedPassword);
+        // 5. DBへ
         service.saveEmployee(employee);
         return "redirect:/employee/list";
     }
@@ -97,7 +107,7 @@ public class EmployeeController {
         authForm.setPassword(newpassword);
         if (!authForm.getPassword().equals("")) {
             // ・passwordが空白ではなかった=パスワードの編集があった時は、passwordをセットする
-            authDb.setPassword(authForm.getPassword());
+            authDb.setPassword(passwordEncoder.encode(authForm.getPassword()));
         }
         // 4. roleの更新・・・authentication
         authDb.setRole(authForm.getRole());
