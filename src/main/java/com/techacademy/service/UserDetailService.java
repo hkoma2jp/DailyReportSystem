@@ -25,6 +25,6 @@ public class UserDetailService implements UserDetailsService {
         if (!authentication.isPresent()) {
             throw new UsernameNotFoundException("Exception:Username Not Found");
         }
-        return new UserDetail(authentication.get().getUser());
+        return new UserDetail(authentication.get().getEmployee());
     }
 }
