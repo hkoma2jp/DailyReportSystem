@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="'ログイン | ' + #{content.system}"></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link rel="stylesheet" th:href="@{./css/common/style.css}">
+    <link rel="stylesheet" th:href="@{./css/login/style.css}">
+</head>
+<body>
+    <div class="wrap">
+        <header class="header">
+            <div class="inner">
+                <h1>日報管理システム</h1>
+            </div>
+        </header>
+
+        <main class="content">
+            <div class="inner">
+                <h2 th:text="ログイン"></h2>
+                <p class="err" th:if="${param.error}">ユーザ名かパスワードが一致しませんでした。</p>
+                <form method="post" action="/login" th:action="@{/login}">
+                <table>
+                    <tr>
+                        <td><label for="loginuser">ユーザ名：</label></td>
+                        <td><input type="text" id="username" name="username" value=""></td>
+                    </tr>
+                    <tr>
+                        <td><label for="password">パスワード：</label></td>
+                        <td><input type="text" id="password" name="password" value=""></td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td><input type="submit" name="loginRun" value="ログイン"></td>
+                    </tr>
+                </table>
+                </form>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="inner">
+                <p th:text="#{content.system}"></p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
