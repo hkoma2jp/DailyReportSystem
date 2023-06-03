@@ -6,19 +6,21 @@ import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.techacademy.entity.Employee;
+
 public class UserDetail implements UserDetails {
     private static final long serialVersionUID = 1L;
 
-    private final User user;
+    private final Employee employee;
     private final Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetail(User user) {
-        this.user = user;
+    public UserDetail(Employee employee) {
+        this.employee = employee;
         this.authorities = new ArrayList<GrantedAuthority>();
     }
 
-    public User getUser() {
-        return user;
+    public Employee getUser() {
+        return employee;
     }
 
     @Override
@@ -28,12 +30,12 @@ public class UserDetail implements UserDetails {
 
     @Override
     public String getPassword() {
-        return user.getAuthentication().getPassword();
+        return employee.getAuthentication().getPassword();
     }
 
     @Override
     public String getUsername() {
-        return user.getAuthentication().getLoginUser();
+        return employee.getAuthentication().getLoginUser();
     }
 
     @Override
