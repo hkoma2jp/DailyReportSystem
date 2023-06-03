@@ -10,6 +10,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.security.core.userdetails.User;
+
 import lombok.Data;
 
 @Data
@@ -40,5 +42,6 @@ public class Authentication {
     @OneToOne
     @JoinColumn(name="employee_id", referencedColumnName="id")
     private Employee employee;
+
 
 }
