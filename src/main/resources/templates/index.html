@@ -11,11 +11,7 @@
 </head>
 <body>
     <div class="wrap">
-        <header class="header">
-            <div class="inner">
-                <h1>日報管理システム</h1>
-            </div>
-        </header>
+        <div th:replace="header :: header"></div>
 
         <main class="content">
             <div class="inner">
@@ -23,11 +19,7 @@
             </div>
         </main>
 
-        <footer class="footer">
-            <div class="inner">
-                <p>日報管理システム</p>
-            </div>
-        </footer>
+        <div th:replace="footer :: footer"></div>
     </div>
 </body>
 </html>

@@ -22,9 +22,22 @@ h1,p {
     height: 100px;
     background-color: #333;
 }
+.header .inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 .header h1 {
     color: #fff;
     line-height: 100px;
+}
+.header .logout_link {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+    color: #fff;
 }
 .footer {
     position: absolute;
