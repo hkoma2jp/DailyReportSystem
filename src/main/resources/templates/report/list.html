@@ -7,7 +7,7 @@
     <title th:text="'従業員' + #{content.list} + ' | ' + #{content.system}"></title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
     <link rel="stylesheet" th:href="@{../css/common/style.css}">
-    <link rel="stylesheet" th:href="@{../css/employee/list/style.css}">
+    <link rel="stylesheet" th:href="@{../css/report/list/style.css}">
 </head>
 <body>
     <div class="wrap">
@@ -18,24 +18,26 @@
                 <h2 th:text="'従業員' + #{content.list}"></h2>
                 <table>
                     <tr>
-                        <th>社員番号</th>
                         <th>氏名</th>
+                        <th>日付</th>
+                        <th>タイトル</th>
                         <th>操作</th>
                     </tr>
-                    <tr th:each="employee : ${employeeList}">
-                        <td th:text="${employee.authentication.code}"></td>
-                        <td th:text="${employee.name}"></td>
+                    <tr th:each="report : ${reportList}">
+                        <td th:text="${report.employee.name}"></td>
+                        <td th:text="${report.created_at}"></td>
+                        <td th:text="${report.title}"></td>
                         <td>
-                            <a th:href="@{/employee/{aid}(aid=${employee.id})}" th:text="#{action.viewdetail}"></a>
+                            <a th:href="@{/report/{aid}(aid=${report.id})}" th:text="#{action.viewdetail}"></a>
                         </td>
                     </tr>
                 </table>
                 <div class="vol">
-                    <span th:text="'（全' + ${employeeList.size() + '件）'}"></span>
+                    <span>全○件</span>
                 </div>
                 <div class="menu">
                     <ul>
-                        <li><a href="/employee/new">新規従業員の登録</a></li>
+                        <li><a href="/report/new">日報の登録</a></li>
                     </ul>
                 </div>
             </div>

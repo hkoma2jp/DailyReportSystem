@@ -6,16 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="'従業員ID' + ${id} + 'の従業員情報' + #{content.edit} + ' | ' + #{content.system}"></title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
-    <link rel="stylesheet" th:href="@{../css/common/style.css}">
-    <link rel="stylesheet" th:href="@{../css/employee/edit/style.css}">
+    <link rel="stylesheet" th:href="@{../../css/common/style.css}">
+    <link rel="stylesheet" th:href="@{../../css/employee/edit/style.css}">
 </head>
 <body>
     <div class="wrap">
-        <header class="header">
-            <div class="inner">
-                <h1 th:text="#{content.system}"></h1>
-            </div>
-        </header>
+        <div th:replace="header :: header"></div>
 
         <main class="content">
             <div class="inner">
@@ -80,11 +76,7 @@
             </div>
         </main>
 
-        <footer class="footer">
-            <div class="inner">
-                <p th:text="#{content.system}"></p>
-            </div>
-        </footer>
+        <div th:replace="footer :: footer"></div>
     </div>
 </body>
 </html>
