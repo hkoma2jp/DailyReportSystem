@@ -6,12 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="'従業員' + #{content.list} + ' | ' + #{content.system}"></title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
-    <link rel="stylesheet" th:href="@{../css/common/style.css}">
-    <link rel="stylesheet" th:href="@{../css/employee/list/style.css}">
+    <link rel="stylesheet" th:href="@{/css/common/style.css}">
+    <link rel="stylesheet" th:href="@{/css/employee/list/style.css}">
 </head>
 <body>
     <div class="wrap">
-        <div th:replace="header :: header"></div>
+        <div th:replace="header :: header-IsLoggedIn"></div>
 
         <main class="content">
             <div class="inner">
@@ -31,7 +31,7 @@
                     </tr>
                 </table>
                 <div class="vol">
-                    <span th:text="'（全' + ${employeeList.size() + '件）'}"></span>
+                    <span th:text="'（全 ' + ${employeeList.size() + ' 件）'}"></span>
                 </div>
                 <div class="menu">
                     <ul>
