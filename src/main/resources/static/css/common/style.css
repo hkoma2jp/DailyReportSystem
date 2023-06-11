@@ -31,13 +31,23 @@ h1,p {
     color: #fff;
     line-height: 100px;
 }
-.header .logout_link {
+.header a.logo {
+    text-decoration: none;
+    cursor: pointer;
+}
+.header a,
+.header p,
+.header .loginout {
     margin: 0;
     padding: 0;
     border: 0;
     background: none;
-    cursor: pointer;
     color: #fff;
+}
+.header a,
+.header .loginout {
+    text-decoration: underline;
+    cursor: pointer;
 }
 .footer {
     position: absolute;

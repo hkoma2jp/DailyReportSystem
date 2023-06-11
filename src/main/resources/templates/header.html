@@ -1,13 +1,31 @@
 <!DOCTYPE html>
 <html xmlns="http://www.thymeleaf.org">
 <body>
-        <header class="header" th:fragment="header">
+        <!-- 非ログイン状態のヘッダー -->
+        <header class="header" th:fragment="header-Default">
             <div class="inner">
-                <h1 th:text="#{content.system}"></h1>
-                <form th:action="@{/logout}" method="post">
-                  <input type="submit" class="logout_link" value="ログアウト"/>
-                </form>
+              <a href="/" class="logo">
+                    <h1 th:text="#{content.system}"></h1>
+                </a>
+                <a href="/employee/list">従業員管理</a>
+                <a href="/report/list">日報管理</a>
+                <a href="/login" class="loginout">ログイン</a>
             </div>
+        </header>
+
+        <!-- ログイン状態のヘッダー -->
+        <header class="header" th:fragment="header-IsLoggedIn">
+          <div class="inner">
+              <a href="/" class="logo">
+                  <h1 th:text="#{content.system}"></h1>
+              </a>
+              <a href="/employee/list">従業員管理</a>
+              <a href="/report/list">日報管理</a>
+              <p th:text="${#authentication?.name} + 'さん'"></p>
+              <form th:action="@{/logout}" method="post">
+                <input type="submit" class="loginout" value="ログアウト"/>
+              </form>
+          </div>
         </header>
 </body>
 </html>
