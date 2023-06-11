@@ -10,6 +10,16 @@ th, td {
     padding: 10px 20px;
 }
 
+span.err {
+    display: block;
+    padding: 10px 0 10px 10px;
+    color: red;
+}
+
+input.title {
+    width: 91%;
+}
+
 .controller {
     padding: 10px 0;
 }
