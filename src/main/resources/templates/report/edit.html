@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="'日報' + #{content.edit} + '　' + ${report.title} + '（' + ${report.employee.name} +'）' + ' | ' + #{content.system}"></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link rel="stylesheet" th:href="@{/css/common/style.css}">
+    <link rel="stylesheet" th:href="@{/css/report/edit/style.css}">
+</head>
+<body>
+    <div class="wrap">
+        <div th:replace="header :: header-IsLoggedIn"></div>
+
+        <main class="content">
+            <div class="inner">
+                <h2 th:text="'日報' + #{content.edit}"></h2>
+                <form method="post" th:action="@{/report/update/{id}/(id=${report.id})}" th:object="${report}">
+                    <table>
+                        <tr>
+                            <th>
+                                <label for="report_date">日付</label>
+                            </th>
+                            <td>
+                                <input type="date" th:field="*{report_date}" th:errorclass="err">
+                                <span th:errors="*{report_date}" class="err"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                <label for="name">氏名</label>
+                            </th>
+                            <td>
+                                <p th:text="${#authentication?.name}"></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                <label for="title">タイトル</label>
+                            </th>
+                            <td>
+                                <input type="text" th:field="*{title}" class="title" th:errorclass="err">
+                                <span th:errors="*{title}" class="err"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                <label for="title">内容</label>
+                            </th>
+                            <td>
+                                <textarea cols="50" rows="10" class="content" th:field="*{content}" th:errorclass="err"></textarea>
+                                <span th:errors="*{content}" class="err"></span>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="controller">
+                        <input type="submit" value="投稿">
+                    </div>
+                </form>
+                <div class="menu">
+                    <ul>
+                        <li><a href="/report/list" th:text="#{content.list} + 'に' + #{action.back}"></a></li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+
+        <div th:replace="footer :: footer"></div>
+    </div>
+</body>
+</html>

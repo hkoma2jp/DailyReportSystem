@@ -4,18 +4,43 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>日報管理システム</title>
+    <title th:text="${#authentication?.name} + 'さんの日報一覧' + ' | ' + #{content.system}"></title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
     <link rel="stylesheet" th:href="@{css/common/style.css}">
     <link rel="stylesheet" th:href="@{css/index/style.css}">
 </head>
 <body>
     <div class="wrap">
-        <div th:replace="header :: header"></div>
+        <div th:replace="header :: header-IsLoggedIn"></div>
 
         <main class="content">
             <div class="inner">
-                <p>日報管理システム</p>
+                <h2>日報管理システムへようこそ</h2>
+                <p>【自分の日報 一覧】</p>
+                <table>
+                    <tr>
+                        <th>氏名</th>
+                        <th>日付</th>
+                        <th>タイトル</th>
+                        <th>操作</th>
+                    </tr>
+                    <tr th:each="report : ${reportList}">
+                        <td th:text="${report.employee.name}"></td>
+                        <td th:text="${#temporals.format(report.report_date, 'yyyy-MM-dd')}"></td>
+                        <td th:text="${report.title}"></td>
+                        <td>
+                            <a th:href="@{/report/{aid}(aid=${report.id})}" th:text="#{action.viewdetail}"></a>
+                        </td>
+                    </tr>
+                </table>
+                <div class="vol">
+                    <span th:text="'（全 ' + ${reportList?.size() + ' 件）'}"></span>
+                </div>
+                <div class="menu">
+                    <ul>
+                        <li><a href="/report/new" th:text="#{content.newdialy}"></a></li>
+                    </ul>
+                </div>
             </div>
         </main>
 
