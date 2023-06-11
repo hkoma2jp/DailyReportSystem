@@ -4,18 +4,18 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="'従業員' + #{content.list} + ' | ' + #{content.system}"></title>
+    <title th:text="'日報' + #{content.list} + ' | ' + #{content.system}"></title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
-    <link rel="stylesheet" th:href="@{../css/common/style.css}">
-    <link rel="stylesheet" th:href="@{../css/report/list/style.css}">
+    <link rel="stylesheet" th:href="@{/css/common/style.css}">
+    <link rel="stylesheet" th:href="@{/css/report/list/style.css}">
 </head>
 <body>
     <div class="wrap">
-        <div th:replace="header :: header"></div>
+        <div th:replace="header :: header-IsLoggedIn"></div>
 
         <main class="content">
             <div class="inner">
-                <h2 th:text="'従業員' + #{content.list}"></h2>
+                <h2 th:text="'日報' + #{content.list}"></h2>
                 <table>
                     <tr>
                         <th>氏名</th>
@@ -25,7 +25,7 @@
                     </tr>
                     <tr th:each="report : ${reportList}">
                         <td th:text="${report.employee.name}"></td>
-                        <td th:text="${report.created_at}"></td>
+                        <td th:text="${#temporals.format(report.report_date, 'yyyy-MM-dd')}"></td>
                         <td th:text="${report.title}"></td>
                         <td>
                             <a th:href="@{/report/{aid}(aid=${report.id})}" th:text="#{action.viewdetail}"></a>
@@ -33,11 +33,11 @@
                     </tr>
                 </table>
                 <div class="vol">
-                    <span>全○件</span>
+                    <span th:text="'（全 ' + ${reportList?.size() + ' 件）'}"></span>
                 </div>
                 <div class="menu">
                     <ul>
-                        <li><a href="/report/new">日報の登録</a></li>
+                        <li><a href="./new">新規日報の登録</a></li>
                     </ul>
                 </div>
             </div>
